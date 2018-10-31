@@ -4,12 +4,18 @@ import br.zup.model.Greeting;
 import br.zup.repository.GreetingRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
 @Service
+@Transactional(
+        propagation = Propagation.SUPPORTS,
+        readOnly = true
+)
 public class GreetingServiceBean implements GreetingService{
 
 
@@ -28,11 +34,19 @@ public class GreetingServiceBean implements GreetingService{
     }
 
     @Override
+    @Transactional(
+            propagation = Propagation.REQUIRED,
+            readOnly = false
+    )
     public Greeting create(Greeting greeting) {
         if(greeting.getId() != null){
             return null;
         }
-        return greetingRepository.save(greeting);
+        Greeting createdGreeting = greetingRepository.save(greeting);
+        if(createdGreeting.getId() == 4){
+            throw new RuntimeException("Roll Back please !");
+        }
+        return createdGreeting;
     }
 
     @Override
