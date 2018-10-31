@@ -18,34 +18,34 @@ public class GreetingBatchBean {
     @Autowired
     private GreetingService greetingService;
 
-    @Scheduled(
-            cron = "0,30 * * * * *"
-    )
-    public void cronJob(){
-        logger.info("> cronJob");
-        Collection<Greeting> greetings = greetingService.findAll();
-        logger.info("There are {} greeting in the data store.",greetings.size());
-
-    }
-
-
-    @Scheduled(
-            initialDelay = 5000,
-            fixedDelay = 15000
-    )
-    public void fixedDelayJobWithInitialDelay(){
-        logger.info("> fixedDelayJobWithInitialDelay");
-
-        long pause = 5000;
-        long start = System.currentTimeMillis();
-        do{
-            if(start + pause < System.currentTimeMillis())
-                break;
-        }while (true);
-        logger.info("Processing time was {} seconds.", pause / 1000);
-        logger.info("< fixedDelayJobWithInitialDelay");
-
-
-    }
+//    @Scheduled(
+//            cron = "0,30 * * * * *"
+//    )
+//    public void cronJob(){
+//        logger.info("> cronJob");
+//        Collection<Greeting> greetings = greetingService.findAll();
+//        logger.info("There are {} greeting in the data store.",greetings.size());
+//
+//    }
+//
+//
+//    @Scheduled(
+//            initialDelay = 5000,
+//            fixedDelay = 15000
+//    )
+//    public void fixedDelayJobWithInitialDelay(){
+//        logger.info("> fixedDelayJobWithInitialDelay");
+//
+//        long pause = 5000;
+//        long start = System.currentTimeMillis();
+//        do{
+//            if(start + pause < System.currentTimeMillis())
+//                break;
+//        }while (true);
+//        logger.info("Processing time was {} seconds.", pause / 1000);
+//        logger.info("< fixedDelayJobWithInitialDelay");
+//
+//
+//    }
 
 }
