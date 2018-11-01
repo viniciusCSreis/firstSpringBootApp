@@ -16,7 +16,7 @@ import java.util.Collection;
 import java.util.concurrent.Future;
 
 @RestController
-public class GreetingController {
+public class GreetingController extends BaseController{
 
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());
@@ -82,7 +82,6 @@ public class GreetingController {
     @RequestMapping(
             value = "api/greetings/{id}",
             method = RequestMethod.DELETE,
-            consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE )
     public ResponseEntity<Greeting> deleteGreeting(@PathVariable Long id){
         logger.info("> deleteGreeting id:{}", id);

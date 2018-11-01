@@ -3,6 +3,7 @@ package br.zup;
 import java.io.IOException;
 
 import br.zup.AbstractTest;
+import br.zup.api.BaseController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
@@ -58,5 +59,15 @@ public abstract class AbstractControllerTest extends AbstractTest {
             throws JsonParseException, JsonMappingException, IOException {
         ObjectMapper mapper = new ObjectMapper();
         return mapper.readValue(json, clazz);
+    }
+
+    /**
+     * Prepares the test class for execution of web tests. Builds a MockMvc
+     * instance using standalone configuration facilitating the injection of
+     * Mockito resources into the controller class.
+     * @param controller A controller object to be tested.
+     */
+    protected void setUp(BaseController controller) {
+        mvc = MockMvcBuilders.standaloneSetup(controller).build();
     }
 }
