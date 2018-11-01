@@ -10,6 +10,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityExistsException;
+import javax.persistence.NoResultException;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
@@ -50,7 +52,7 @@ public class GreetingServiceBean implements GreetingService{
             key = "#result.id")
     public Greeting create(Greeting greeting) {
         if(greeting.getId() != null){
-            return null;
+            throw new EntityExistsException("Greeting with Id");
         }
 
         return greetingRepository.save(greeting);
@@ -64,7 +66,7 @@ public class GreetingServiceBean implements GreetingService{
     public Greeting update(Greeting greeting) {
         Greeting greetingToUpdate = findOne(greeting.getId());
         if(greetingToUpdate == null){
-            return null;
+            throw new NoResultException("Greeting not foud");
         }
         greetingToUpdate.setText(greeting.getText());
         return greetingRepository.save(greetingToUpdate);
@@ -84,7 +86,7 @@ public class GreetingServiceBean implements GreetingService{
             value = "greetings",
             allEntries = true
     )
-    public void evitCache() {
+    public void evictCache() {
 
     }
 
